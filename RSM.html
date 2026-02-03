@@ -1,217 +1,248 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Remito de Solicitud de Materiales</title>
+    <meta charset="UTF-8" />
+    <title>Solicitud de Materiales</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .header { text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px; }
-        .section { margin: 20px 0; }
-        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        label { display: block; margin: 10px 0 5px; }
-        input, textarea, select { width: 100%; padding: 8px; margin-bottom: 10px; }
-        button { padding: 10px 20px; background-color: #007bff; color: white; border: none; cursor: pointer; margin-right: 10px; }
-        button:hover { background-color: #0056b3; }
-        .add-row { margin-top: 10px; }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px 40px;
+            background-color:#f0f0f0;
+        }
+        h3 {
+            text-align: center;
+            text-decoration: underline;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 900px;
+            margin: auto;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+        }
+        input[type="text"], input[type="date"], textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        textarea {
+            resize: vertical;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 15px;
+        }
+        th, td {
+            border: 1px solid #999;
+            padding: 8px;
+            text-align: left;
+            vertical-align: middle;
+        }
+        th {
+            background-color: #eee;
+        }
+        input[type="number"] {
+            width: 70px;
+            padding: 5px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+        }
+        button {
+            margin-top: 15px;
+            margin-right: 10px;
+            padding: 10px 14px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+        }
+        .btn-danger:hover {
+            background-color: #a71d2a;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+        .btn-secondary:hover {
+            background-color: #4a4e51;
+        }
     </style>
 </head>
 <body>
-    <div id="remito-content">
-        <div class="header">
-            <h1>Remito de Solicitud de Materiales</h1>
-            <p>Número de Remito: <input type="text" id="numero-remito" placeholder="Ej: REM-001"></p>
-            <p>Fecha: <input type="date" id="fecha"></p>
-            <p>Cliente: <input type="text" id="cliente" placeholder="Ej: Vitco S.R.L"></p>
-            <p>Obra/Servicio: <input type="text" id="obra" placeholder="Ej: Instalación Aire Acondicionado en Oficina"></p>
-            <p>Desarrollado por Persat.io</p>
-        </div>
+<div class="container">
+    <h3>SOLICITUD-DE-MATERIALES-</h3>
+    <label for="numero-remito">Número de Remito:</label>
+    <input id="numero-remito" type="text" placeholder="Ej: 001" />
 
-        <div class="section">
-            <h2>Lista de Materiales Solicitados</h2>
-            <table id="materiales-table">
-                <thead>
-                    <tr>
-                        <th>Descripción</th>
-                        <th>Unidad de Medida (UM)</th>
-                        <th>Cantidad</th>
-                        <th>Acción</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><input type="text" placeholder="Ej: Compresor"></td>
-                        <td><input type="text" placeholder="Ej: Unidad"></td>
-                        <td><input type="number" placeholder="1"></td>
-                        <td><button onclick="eliminarFila(this)">Eliminar</button></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" placeholder="Ej: Capacitor"></td>
-                        <td><input type="text" placeholder="Ej: Unidad"></td>
-                        <td><input type="number" placeholder="1"></td>
-                        <td><button onclick="eliminarFila(this)">Eliminar</button></td>
-                    </tr>
-                    <!-- Filas adicionales se agregan dinámicamente -->
-                </tbody>
-            </table>
-            <button class="add-row" onclick="agregarFila()">Agregar Material</button>
-        </div>
+    <label for="fecha">Fecha:</label>
+    <input id="fecha" type="date" />
 
-        <div class="section">
-            <h2>Observaciones</h2>
-            <textarea id="observaciones" rows="4" placeholder="Detalles adicionales sobre la solicitud, urgencia, etc."></textarea>
-        </div>
+    <label for="cliente">Cliente:</label>
+    <input id="cliente" type="text" placeholder="Nombre del cliente" />
 
-        <div class="section">
-            <h2>Información del Técnico</h2>
-            <label for="tecnico">Nombre del Técnico:</label>
-            <input type="text" id="tecnico" placeholder="Ej: David Andino">
+    <label for="obra">Obra/Servicio:</label>
+    <input id="obra" type="text" placeholder="Descripción de la obra o servicio" />
 
-            <label for="telefono-tecnico">Teléfono del Técnico:</label>
-            <input type="tel" id="telefono-tecnico" placeholder="Ej: +549123456789">
+    <label>Materiales:</label>
+    <table id="materiales-table">
+        <thead>
+            <tr>
+                <th>Descripción</th>
+                <th>U.M.</th>
+                <th>Cantidad</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="text" placeholder="Ej: Compresor" /></td>
+                <td><input type="text" placeholder="Ej: Unidad" /></td>
+                <td><input type="number" min="1" value="1" /></td>
+                <td><button class="btn-danger" onclick="eliminarFila(this)">Eliminar</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <button onclick="agregarFila()" class="btn-secondary">Agregar Material</button>
 
-            <label for="firma-tecnico">Firma del Técnico:</label>
-            <input type="text" id="firma-tecnico" placeholder="Nombre o firma digital">
-        </div>
+    <label for="observaciones">Observaciones/Comentarios:</label>
+    <textarea id="observaciones" rows="3" placeholder="Detalles adicionales..."></textarea>
+
+    <label for="tecnico">Técnico:</label>
+    <input id="tecnico" type="text" placeholder="Nombre del técnico" />
+
+    <label for="telefono-tecnico">Teléfono del Técnico:</label>
+    <input id="telefono-tecnico" type="text" placeholder="Número de contacto" />
+
+    <label for="firma-tecnico">Firma del Técnico:</label>
+    <input id="firma-tecnico" type="text" placeholder="Firma o nombre" />
+
+    <div style="margin-top: 20px;">
+      <button onclick="guardarRemito()">Guardar Remito</button>
+      <button onclick="enviarWhatsApp()">Enviar por WhatsApp</button>
+      <button onclick="imprimirRemito()">Imprimir Remito</button>
+      <button onclick="enviarAGoogleSheets()">Enviar a Google Sheets</button>
     </div>
+</div>
 
-    <div class="section">
-        <button onclick="guardarRemito()">Guardar Remito</button>
-        <button onclick="enviarWhatsApp()">Enviar por WhatsApp</button>
-        <button onclick="imprimirRemito()">Imprimir Remito</button>
-    </div>
-
-    <script>
-        function agregarFila() {
-            const table = document.getElementById('materiales-table').getElementsByTagName('tbody')[0];
-            const newRow = table.insertRow();
-            newRow.innerHTML = `
-                <td><input type="text" placeholder="Descripción"></td>
-                <td><input type="text" placeholder="UM"></td>
-                <td><input type="number" placeholder="Cantidad"></td>
-                <td><button onclick="eliminarFila(this)">Eliminar</button></td>
-            `;
-        }
-
-        function eliminarFila(button) {
-            const row = button.parentNode.parentNode;
-            row.parentNode.removeChild(row);
-        }
-
-        function guardarRemito() {
-            alert('Remito guardado localmente.');
-            const data = {
-                numeroRemito: document.getElementById('numero-remito').value,
-                fecha: document.getElementById('fecha').value,
-                cliente: document.getElementById('cliente').value,
-                obra: document.getElementById('obra').value,
-                observaciones: document.getElementById('observaciones').value,
-                tecnico: document.getElementById('tecnico').value,
-                telefonoTecnico: document.getElementById('telefono-tecnico').value,
-                firmaTecnico: document.getElementById('firma-tecnico').value
-            };
-            localStorage.setItem('remitoMateriales', JSON.stringify(data));
-        }
-
-        function enviarWhatsApp() {
-            const numeroRemito = document.getElementById('numero-remito').value;
-            const fecha = document.getElementById('fecha').value;
-            const cliente = document.getElementById('cliente').value;
-            const obra = document.getElementById('obra').value;
-            const observaciones = document.getElementById('observaciones').value;
-            const tecnico = document.getElementById('tecnico').value;
-            const telefonoTecnico = document.getElementById('telefono-tecnico').value;
-            const firmaTecnico = document.getElementById('firma-tecnico').value;
-
-            // Recopilar materiales
-            const table = document.getElementById('materiales-table');
-            const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
-            let materiales = '';
-            for (let i = 0; i < rows.length; i++) {
-                const cells = rows[i].getElementsByTagName('td');
-                const desc = cells[0].querySelector('input').value;
-                const um = cells[1].querySelector('input').value;
-                const cant = cells[2].querySelector('input').value;
-                if (desc || um || cant) {
-                    materiales += `- ${desc} (${um}): ${cant}\n`;
-                }
-            }
-
-            // Construir mensaje
-            const mensaje = `*Remito de Solicitud de Materiales*\n\n` +
-                `Número: ${numeroRemito}\n` +
-                `Fecha: ${fecha}\n` +
-                `Cliente: ${cliente}\n` +
-                `Obra/Servicio: ${obra}\n\n` +
-                `*Materiales Solicitados:*\n${materiales}\n` +
-                `Observaciones: ${observaciones}\n\n` +
-                `Técnico: ${tecnico}\n` +
-                `Teléfono: ${telefonoTecnico}\n` +
-                `Firma: ${firmaTecnico}`;
-
-            // Codificar mensaje para URL
-            const mensajeCodificado = encodeURIComponent(mensaje);
-
-            // Abrir WhatsApp (reemplaza con tu número si es fijo, o deja que el usuario elija)
-            const url = `https://wa.me/?text=${mensajeCodificado}`;
-            window.open(url, '_blank');
-        }
-
-        function imprimirRemito() {
-            window.print();
-        }
-    </script>
-</body>
-</html>
-<!-- Agrega este botón en la sección de botones -->
-<button onclick="enviarAGoogleSheets()">Enviar a Google Sheets</button>
-
-<!-- Modifica el script JavaScript -->
 <script>
-    // ... (mantén las funciones existentes como agregarFila, eliminarFila, guardarRemito, enviarWhatsApp, imprimirRemito)
+    // Añade una fila vacía para añadir más materiales
+    function agregarFila() {
+        const tbody = document.getElementById('materiales-table').getElementsByTagName('tbody')[0];
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `
+            <td><input type="text" placeholder="Ej: Compresor" /></td>
+            <td><input type="text" placeholder="Ej: Unidad" /></td>
+            <td><input type="number" min="1" value="1" /></td>
+            <td><button class="btn-danger" onclick="eliminarFila(this)">Eliminar</button></td>
+        `;
+        tbody.appendChild(newRow);
+    }
 
-    function enviarAGoogleSheets() {
-        // Recopilar datos del formulario
-        const numeroRemito = document.getElementById('numero-remito').value;
+    // Elimina la fila donde se hace clic en "Eliminar"
+    function eliminarFila(button) {
+        const row = button.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+    }
+
+    // Guarda en localStorage todos los datos del remito
+    function guardarRemito() {
+        const data = recopilarDatos();
+        localStorage.setItem('remitoData', JSON.stringify(data));
+        alert('Remito guardado localmente.');
+    }
+
+    // Compila los datos de formulario en un objeto
+    function recopilarDatos() {
+        const numeroRemito = document.getElementById('numero-remito').value.trim();
         const fecha = document.getElementById('fecha').value;
-        const cliente = document.getElementById('cliente').value;
-        const obra = document.getElementById('obra').value;
-        const observaciones = document.getElementById('observaciones').value;
-        const tecnico = document.getElementById('tecnico').value;
-        const telefonoTecnico = document.getElementById('telefono-tecnico').value;
-        const firmaTecnico = document.getElementById('firma-tecnico').value;
+        const cliente = document.getElementById('cliente').value.trim();
+        const obra = document.getElementById('obra').value.trim();
+        const observaciones = document.getElementById('observaciones').value.trim();
+        const tecnico = document.getElementById('tecnico').value.trim();
+        const telefonoTecnico = document.getElementById('telefono-tecnico').value.trim();
+        const firmaTecnico = document.getElementById('firma-tecnico').value.trim();
 
-        // Recopilar materiales como array de objetos
-        const table = document.getElementById('materiales-table');
-        const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
         const materiales = [];
-        for (let i = 0; i < rows.length; i++) {
-            const cells = rows[i].getElementsByTagName('td');
-            const desc = cells[0].querySelector('input').value;
-            const um = cells[1].querySelector('input').value;
-            const cant = cells[2].querySelector('input').value;
-            if (desc || um || cant) {
-                materiales.push({ descripcion: desc, um: um, cantidad: cant });
+        const rows = document.querySelectorAll('#materiales-table tbody tr');
+        rows.forEach(row => {
+            const inputs = row.querySelectorAll('input');
+            const descripcion = inputs[0].value.trim();
+            const um = inputs[1].value.trim();
+            const cantidad = inputs[2].value;
+            if (descripcion !== '' || um !== '' || cantidad !== '') {
+                materiales.push({
+                    descripcion: descripcion,
+                    um: um,
+                    cantidad: cantidad
+                });
             }
-        }
+        });
 
-        // Datos a enviar
-        const data = {
-            numeroRemito: numeroRemito,
-            fecha: fecha,
-            cliente: cliente,
-            obra: obra,
-            materiales: materiales,
-            observaciones: observaciones,
-            tecnico: tecnico,
-            telefonoTecnico: telefonoTecnico,
-            firmaTecnico: firmaTecnico
+        return {
+            numeroRemito,
+            fecha,
+            cliente,
+            obra,
+            observaciones,
+            tecnico,
+            telefonoTecnico,
+            firmaTecnico,
+            materiales
         };
+    }
 
-        // Reemplaza con tu URL de Google Apps Script
-        const scriptURL = 'https://script.google.com/macros/s/AKfycby3TLJvSt7feX4-vQFd-6VinL9AOcz_IHCVW32SKmWXhHNPn4JMCgovPWs5S_XCjeMfFQ/exec';
+    // Abre WhatsApp con mensaje pre-formateado con contenido del remito
+    function enviarWhatsApp() {
+        const data = recopilarDatos();
+
+        let mensaje = `*Solicitud de Materiales*%0A`;
+        mensaje += `N° Remito: ${encodeURIComponent(data.numeroRemito)}%0A`;
+        mensaje += `Fecha: ${encodeURIComponent(data.fecha)}%0A`;
+        mensaje += `Cliente: ${encodeURIComponent(data.cliente)}%0A`;
+        mensaje += `Obra: ${encodeURIComponent(data.obra)}%0A%0A`;
+        mensaje += `*Materiales:*%0A`;
+
+        data.materiales.forEach(m => {
+            mensaje += `- ${encodeURIComponent(m.descripcion)} (${encodeURIComponent(m.um)}): ${encodeURIComponent(m.cantidad)}%0A`;
+        });
+
+        mensaje += `%0AObservaciones: ${encodeURIComponent(data.observaciones)}%0A`;
+        mensaje += `Técnico: ${encodeURIComponent(data.tecnico)}%0A`;
+        mensaje += `Teléfono Técnico: ${encodeURIComponent(data.telefonoTecnico)}%0A`;
+        mensaje += `Firma Técnico: ${encodeURIComponent(data.firmaTecnico)}`;
+
+        const urlWhatsApp = `https://wa.me/?text=${mensaje}`;
+        window.open(urlWhatsApp, '_blank');
+    }
+
+    // Imprime la página actual (se recomienda con estilo ya ajustado en CSS)
+    function imprimirRemito() {
+        window.print();
+    }
+
+    // Envía los datos a Google Sheets vía fetch POST a Apps Script endpoint
+    function enviarAGoogleSheets() {
+        const data = recopilarDatos();
+
+        // Aquí colocar la URL de tu script de Google Apps Script (reemplaza con tu URL real)
+        const scriptURL = 'https://script.google.com/macros/s/TU_SCRIPT_ID/exec';
 
         fetch(scriptURL, {
             method: 'POST',
@@ -225,11 +256,13 @@
             if (result.success) {
                 alert('Remito enviado a Google Sheets exitosamente.');
             } else {
-                alert('Error al enviar: ' + result.error);
+                alert('Error al enviar a Google Sheets: ' + result.error);
             }
         })
         .catch(error => {
-            alert('Error de conexión: ' + error);
+            alert('Error de conexión al enviar a Google Sheets: ' + error);
         });
     }
 </script>
+</body>
+</html>
