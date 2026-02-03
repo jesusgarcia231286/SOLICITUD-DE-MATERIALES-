@@ -1,268 +1,137 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <title>Solicitud de Materiales</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px 40px;
-            background-color:#f0f0f0;
-        }
-        h3 {
-            text-align: center;
-            text-decoration: underline;
-        }
-        .container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            max-width: 900px;
-            margin: auto;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-        label {
-            font-weight: bold;
-            margin-top: 10px;
-            display: block;
-        }
-        input[type="text"], input[type="date"], textarea {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            box-sizing: border-box;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-        }
-        textarea {
-            resize: vertical;
-        }
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            margin-top: 15px;
-        }
-        th, td {
-            border: 1px solid #999;
-            padding: 8px;
-            text-align: left;
-            vertical-align: middle;
-        }
-        th {
-            background-color: #eee;
-        }
-        input[type="number"] {
-            width: 70px;
-            padding: 5px;
-            border-radius: 3px;
-            border: 1px solid #ccc;
-        }
-        button {
-            margin-top: 15px;
-            margin-right: 10px;
-            padding: 10px 14px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .btn-danger {
-            background-color: #dc3545;
-        }
-        .btn-danger:hover {
-            background-color: #a71d2a;
-        }
-        .btn-secondary {
-            background-color: #6c757d;
-        }
-        .btn-secondary:hover {
-            background-color: #4a4e51;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <title>Plantilla Pedido de Materiales</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h3 { text-align: center; }
+    label { font-weight: bold; display: block; margin-top: 10px; }
+    input, textarea { width: 100%; padding: 6px; margin-top: 4px; box-sizing: border-box; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border: 1px solid #ccc; padding: 8px; }
+    button { margin-top: 15px; padding: 10px 15px; cursor: pointer; }
+    .btn-danger { background-color: #c0392b; color: white; }
+    .btn-add { background-color: #2980b9; color: white; }
+  </style>
 </head>
 <body>
-<div class="container">
-    <h3>SOLICITUD-DE-MATERIALES-</h3>
-    <label for="numero-remito">Número de Remito:</label>
-    <input id="numero-remito" type="text" placeholder="Ej: 001" />
+  <h3>Solicitud de Materiales</h3>
+
+  <form id="pedidoForm">
+
+    <label for="numeroRemito">Número de Remito:</label>
+    <input id="numeroRemito" type="text" required />
 
     <label for="fecha">Fecha:</label>
-    <input id="fecha" type="date" />
+    <input id="fecha" type="date" required />
 
     <label for="cliente">Cliente:</label>
-    <input id="cliente" type="text" placeholder="Nombre del cliente" />
+    <input id="cliente" type="text" required />
 
     <label for="obra">Obra/Servicio:</label>
-    <input id="obra" type="text" placeholder="Descripción de la obra o servicio" />
+    <input id="obra" type="text" required />
 
-    <label>Materiales:</label>
-    <table id="materiales-table">
+    <fieldset style="margin-top:15px;">
+      <legend><strong>Materiales</strong></legend>
+      <table id="tablaMateriales">
         <thead>
-            <tr>
-                <th>Descripción</th>
-                <th>U.M.</th>
-                <th>Cantidad</th>
-                <th>Acciones</th>
-            </tr>
+          <tr>
+            <th>Descripción</th>
+            <th>Unidad de Medida</th>
+            <th>Cantidad</th>
+            <th>Acciones</th>
+          </tr>
         </thead>
         <tbody>
-            <tr>
-                <td><input type="text" placeholder="Ej: Compresor" /></td>
-                <td><input type="text" placeholder="Ej: Unidad" /></td>
-                <td><input type="number" min="1" value="1" /></td>
-                <td><button class="btn-danger" onclick="eliminarFila(this)">Eliminar</button></td>
-            </tr>
+          <tr>
+            <td><input type="text" class="desc" required /></td>
+            <td><input type="text" class="um" required /></td>
+            <td><input type="number" class="cantidad" min="1" value="1" required /></td>
+            <td><button type="button" class="btn-danger" onclick="eliminarFila(this)">Eliminar</button></td>
+          </tr>
         </tbody>
-    </table>
-    <button onclick="agregarFila()" class="btn-secondary">Agregar Material</button>
+      </table>
+      <button type="button" class="btn-add" onclick="agregarFila()">Agregar Material</button>
+    </fieldset>
 
-    <label for="observaciones">Observaciones/Comentarios:</label>
-    <textarea id="observaciones" rows="3" placeholder="Detalles adicionales..."></textarea>
+    <label for="observaciones">Observaciones:</label>
+    <textarea id="observaciones" rows="3"></textarea>
 
     <label for="tecnico">Técnico:</label>
-    <input id="tecnico" type="text" placeholder="Nombre del técnico" />
+    <input id="tecnico" type="text" required />
 
-    <label for="telefono-tecnico">Teléfono del Técnico:</label>
-    <input id="telefono-tecnico" type="text" placeholder="Número de contacto" />
+    <label for="telefonoTecnico">Teléfono Técnico:</label>
+    <input id="telefonoTecnico" type="text" />
 
-    <label for="firma-tecnico">Firma del Técnico:</label>
-    <input id="firma-tecnico" type="text" placeholder="Firma o nombre" />
+    <button type="submit" style="margin-top:20px;">Enviar Pedido</button>
+  </form>
 
-    <div style="margin-top: 20px;">
-      <button onclick="guardarRemito()">Guardar Remito</button>
-      <button onclick="enviarWhatsApp()">Enviar por WhatsApp</button>
-      <button onclick="imprimirRemito()">Imprimir Remito</button>
-      <button onclick="enviarAGoogleSheets()">Enviar a Google Sheets</button>
-    </div>
-</div>
-
-<script>
-    // Añade una fila vacía para añadir más materiales
+  <script>
+    // Función para agregar una fila de materiales nueva
     function agregarFila() {
-        const tbody = document.getElementById('materiales-table').getElementsByTagName('tbody')[0];
-        const newRow = document.createElement('tr');
-        newRow.innerHTML = `
-            <td><input type="text" placeholder="Ej: Compresor" /></td>
-            <td><input type="text" placeholder="Ej: Unidad" /></td>
-            <td><input type="number" min="1" value="1" /></td>
-            <td><button class="btn-danger" onclick="eliminarFila(this)">Eliminar</button></td>
-        `;
-        tbody.appendChild(newRow);
+      const tbody = document.querySelector('#tablaMateriales tbody');
+      const nuevaFila = document.createElement('tr');
+      nuevaFila.innerHTML = `
+        <td><input type="text" class="desc" required></td>
+        <td><input type="text" class="um" required></td>
+        <td><input type="number" class="cantidad" min="1" value="1" required></td>
+        <td><button type="button" class="btn-danger" onclick="eliminarFila(this)">Eliminar</button></td>
+      `;
+      tbody.appendChild(nuevaFila);
     }
 
-    // Elimina la fila donde se hace clic en "Eliminar"
-    function eliminarFila(button) {
-        const row = button.parentNode.parentNode;
-        row.parentNode.removeChild(row);
+    // Función para eliminar fila de materiales
+    function eliminarFila(boton) {
+      const fila = boton.closest('tr');
+      fila.remove();
     }
 
-    // Guarda en localStorage todos los datos del remito
-    function guardarRemito() {
-        const data = recopilarDatos();
-        localStorage.setItem('remitoData', JSON.stringify(data));
-        alert('Remito guardado localmente.');
-    }
+    // Eventos formulario
+    document.getElementById('pedidoForm').addEventListener('submit', function(e){
+      e.preventDefault();
 
-    // Compila los datos de formulario en un objeto
-    function recopilarDatos() {
-        const numeroRemito = document.getElementById('numero-remito').value.trim();
-        const fecha = document.getElementById('fecha').value;
-        const cliente = document.getElementById('cliente').value.trim();
-        const obra = document.getElementById('obra').value.trim();
-        const observaciones = document.getElementById('observaciones').value.trim();
-        const tecnico = document.getElementById('tecnico').value.trim();
-        const telefonoTecnico = document.getElementById('telefono-tecnico').value.trim();
-        const firmaTecnico = document.getElementById('firma-tecnico').value.trim();
+      // Validar y recopilar datos
+      const numeroRemito = this.numeroRemito.value.trim();
+      const fecha = this.fecha.value;
+      const cliente = this.cliente.value.trim();
+      const obra = this.obra.value.trim();
+      const observaciones = this.observaciones.value.trim();
+      const tecnico = this.tecnico.value.trim();
+      const telefonoTecnico = this.telefonoTecnico.value.trim();
 
-        const materiales = [];
-        const rows = document.querySelectorAll('#materiales-table tbody tr');
-        rows.forEach(row => {
-            const inputs = row.querySelectorAll('input');
-            const descripcion = inputs[0].value.trim();
-            const um = inputs[1].value.trim();
-            const cantidad = inputs[2].value;
-            if (descripcion !== '' || um !== '' || cantidad !== '') {
-                materiales.push({
-                    descripcion: descripcion,
-                    um: um,
-                    cantidad: cantidad
-                });
-            }
-        });
+      const materiales = [];
+      const rows = document.querySelectorAll('#tablaMateriales tbody tr');
+      for(let row of rows) {
+        const desc = row.querySelector('.desc').value.trim();
+        const um = row.querySelector('.um').value.trim();
+        const cantidad = row.querySelector('.cantidad').value;
 
-        return {
-            numeroRemito,
-            fecha,
-            cliente,
-            obra,
-            observaciones,
-            tecnico,
-            telefonoTecnico,
-            firmaTecnico,
-            materiales
-        };
-    }
+        if(desc && um && cantidad > 0) {
+          materiales.push({descripcion: desc, um, cantidad});
+        }
+      }
 
-    // Abre WhatsApp con mensaje pre-formateado con contenido del remito
-    function enviarWhatsApp() {
-        const data = recopilarDatos();
+      if(materiales.length === 0) {
+        alert('Debe ingresar al menos un material.');
+        return;
+      }
 
-        let mensaje = `*Solicitud de Materiales*%0A`;
-        mensaje += `N° Remito: ${encodeURIComponent(data.numeroRemito)}%0A`;
-        mensaje += `Fecha: ${encodeURIComponent(data.fecha)}%0A`;
-        mensaje += `Cliente: ${encodeURIComponent(data.cliente)}%0A`;
-        mensaje += `Obra: ${encodeURIComponent(data.obra)}%0A%0A`;
-        mensaje += `*Materiales:*%0A`;
+      // Aquí puedes procesar los datos: por ejemplo enviarlos a Google Sheets o API
+      // Por ahora sólo muestro los datos en consola:
+      console.log({
+        numeroRemito, fecha, cliente, obra,
+        observaciones, tecnico, telefonoTecnico,
+        materiales
+      });
 
-        data.materiales.forEach(m => {
-            mensaje += `- ${encodeURIComponent(m.descripcion)} (${encodeURIComponent(m.um)}): ${encodeURIComponent(m.cantidad)}%0A`;
-        });
-
-        mensaje += `%0AObservaciones: ${encodeURIComponent(data.observaciones)}%0A`;
-        mensaje += `Técnico: ${encodeURIComponent(data.tecnico)}%0A`;
-        mensaje += `Teléfono Técnico: ${encodeURIComponent(data.telefonoTecnico)}%0A`;
-        mensaje += `Firma Técnico: ${encodeURIComponent(data.firmaTecnico)}`;
-
-        const urlWhatsApp = `https://wa.me/?text=${mensaje}`;
-        window.open(urlWhatsApp, '_blank');
-    }
-
-    // Imprime la página actual (se recomienda con estilo ya ajustado en CSS)
-    function imprimirRemito() {
-        window.print();
-    }
-
-    // Envía los datos a Google Sheets vía fetch POST a Apps Script endpoint
-    function enviarAGoogleSheets() {
-        const data = recopilarDatos();
-
-        // Aquí colocar la URL de tu script de Google Apps Script (reemplaza con tu URL real)
-        const scriptURL = 'https://script.google.com/macros/s/AKfycby3TLJvSt7feX4-vQFd-6VinL9AOcz_IHCVW32SKmWXhHNPn4JMCgovPWs5S_XCjeMfFQ/exec';
-
-        fetch(scriptURL, {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(result => {
-            if (result.success) {
-                alert('Remito enviado a Google Sheets exitosamente.');
-            } else {
-                alert('Error al enviar a Google Sheets: ' + result.error);
-            }
-        })
-        .catch(error => {
-            alert('Error de conexión al enviar a Google Sheets: ' + error);
-        });
-    }
-</script>
+      alert('Pedido recopilado exitosamente. Implementa la acción que prefieras para enviar o guardar.');
+      
+      // Si quieres limpiar el formulario:
+      // this.reset();
+      // document.querySelector('#tablaMateriales tbody').innerHTML = '';
+      // agregarFila();
+    });
+  </script>
 </body>
 </html>
